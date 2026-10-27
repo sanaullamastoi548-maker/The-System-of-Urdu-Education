@@ -1,9 +1,57 @@
-// آپ کا گوگل ایپ اسکرپٹ کا لائیو Web App URL
+// آپ کا لائیو گوگل ایپ اسکرپٹ کا Web App URL
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwTgMxfbTlqTO8yawhTNUjThtgQN4sUI993Vupokj-6Y6CrrKDFkmdDiugRylwRPWFx/exec";
 
 let currentStudentID = "";
 
-// 1. لاگ ان فنکشن
+// فارم بدلنے کے فنکشنز (رجسٹریشن اور لاگ ان کے درمیان سوئچ کرنے کے لیے)
+function showLogin() {
+    document.getElementById("registerSection").classList.add("hidden");
+    document.getElementById("loginSection").classList.remove("hidden");
+}
+
+function showRegister() {
+    document.getElementById("loginSection").classList.add("hidden");
+    document.getElementById("registerSection").classList.remove("hidden");
+}
+
+// 1. نیا اسٹوڈنٹ رجسٹر کرنے کا فنکشن
+async function registerUser() {
+    const name = document.getElementById("regName").value;
+    const email = document.getElementById("regEmail").value;
+    const password = document.getElementById("regPassword").value;
+    const course = document.getElementById("regCourse").value;
+    const errorTag = document.getElementById("regError");
+
+    if(!name || !email || !password || !course) {
+        errorTag.innerText = "براہ کرم تمام خانے پر کریں۔";
+        errorTag.style.color = "red";
+        return;
+    }
+
+    errorTag.innerText = "رجسٹریشن ہو رہی ہے، انتظار کریں...";
+    errorTag.style.color = "green";
+
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: JSON.stringify({ action: "register", name: name, email: email, password: password, course: course })
+        });
+        const data = await response.json();
+
+        if(data.status === "success") {
+            alert(data.message);
+            showLogin(); // کامیابی کے بعد لاگ ان سکرین پر بھیج دیں
+        } else {
+            errorTag.innerText = data.message;
+            errorTag.style.color = "red";
+        }
+    } catch (err) {
+        errorTag.innerText = "رابطے میں خامی: " + err.message;
+        errorTag.style.color = "red";
+    }
+}
+
+// 2. لاگ ان فنکشن
 async function loginUser() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -36,7 +84,7 @@ async function loginUser() {
     }
 }
 
-// 2. سبق حاصل کرنے کا فنکشن (ٹیکسٹ، ویڈیو، آڈیو، امیج)
+// 3. سبق حاصل کرنے کا فنکشن (ٹیکسٹ، ویڈیو، آڈیو، امیج)
 async function fetchLesson() {
     const courseName = document.getElementById("courseNameInput").value;
     const dayNumber = document.getElementById("dayNumberInput").value;
@@ -65,7 +113,7 @@ async function fetchLesson() {
             
             document.getElementById("mediaArea").innerHTML = mediaHTML;
 
-            // اسٹوڈنٹ کی پروگریس خود بخود شیٹ 3 میں محفوظ ہو جائے گی
+            // اسٹوڈنٹ کی پروگریس شیٹ میں خود بخود محفوظ ہو جائے گی
             saveProgressData(data.lessonID);
         } else {
             alert(data.message);
@@ -75,7 +123,7 @@ async function fetchLesson() {
     }
 }
 
-// 3. پروگریس شیٹ میں سیو کرنے کا فنکشن
+// 4. پروگریس شیٹ میں سیو کرنے کا فنکشن
 async function saveProgressData(lessonID) {
     try {
         await fetch(WEB_APP_URL, {
@@ -87,7 +135,7 @@ async function saveProgressData(lessonID) {
     }
 }
 
-// 4. جیمنائی AI سے سوال پوچھنے کا فنکشن
+// 5. جیمنائی AI سے سوال پوچھنے کا فنکشن
 async function askAI() {
     const promptText = document.getElementById("aiPrompt").value;
     const replyTag = document.getElementById("aiReply");
