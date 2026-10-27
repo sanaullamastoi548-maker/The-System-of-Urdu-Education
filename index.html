@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اردو تعلیمی نظام</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>اردو تعلیمی نظام (آن لائن پورٹل)</h2>
+
+    <!-- لاگ ان سیکشن -->
+    <div id="loginSection" class="box">
+        <h3>اسٹوڈنٹ لاگ ان</h3>
+        <div class="form-group">
+            <label>ای میل / یوزر نیم:</label>
+            <input type="email" id="email" placeholder="apka@email.com">
+        </div>
+        <div class="form-group">
+            <label>پاس ورڈ:</label>
+            <input type="password" id="password" placeholder="پاس ورڈ درج کریں">
+        </div>
+        <button onclick="loginUser()">لاگ ان کریں</button>
+        <p id="loginError" class="error-msg"></p>
+    </div>
+
+    <!-- ڈیش بورڈ (لاگ ان کے بعد نظر آئے گا) -->
+    <div id="dashboardSection" class="hidden box">
+        <h3 id="welcomeMsg"></h3>
+        <hr>
+        
+        <h4>سبق منتخب کریں:</h4>
+        <div class="form-group">
+            <label>کورس کا نام (مثلاً جیسا شیٹ میں ہے):</label>
+            <input type="text" id="courseNameInput" placeholder="کورس کا نام لکھیں">
+        </div>
+        <div class="form-group">
+            <label>دن نمبر (Day Number):</label>
+            <input type="number" id="dayNumberInput" placeholder="1">
+        </div>
+        <button onclick="fetchLesson()">سبق حاصل کریں</button>
+
+        <!-- سبق کا ڈسپلے ایریا -->
+        <div id="lessonCard" class="card hidden">
+            <h3 id="lTitle"></h3>
+            <p id="lText"></p>
+            <div id="mediaArea"></div>
+        </div>
+
+        <!-- اے آئی استاد (Gemini AI Chat) -->
+        <div class="chat-box">
+            <h4>اے آئی استاد سے سوال پوچھیں</h4>
+            <textarea id="aiPrompt" rows="3" placeholder="اس سبق کے بارے میں کوئی بھی سوال یہاں پوچھیں..."></textarea>
+            <br><br>
+            <button onclick="askAI()">سوال پوچھیں</button>
+            <p id="aiReply" class="reply-msg"></p>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
