@@ -11,11 +11,35 @@
 <div class="container">
     <h2>اردو تعلیمی نظام (آن لائن پورٹل)</h2>
 
-    <!-- لاگ ان سیکشن -->
-    <div id="loginSection" class="box">
+    <!-- رجسٹریشن سیکشن -->
+    <div id="registerSection" class="box">
+        <h3>اسٹوڈنٹ رجسٹریشن (نیا اکاؤنٹ بنائیں)</h3>
+        <div class="form-group">
+            <label>पूरा نام (Full Name):</label>
+            <input type="text" id="regName" placeholder="اپنا نام درج کریں">
+        </div>
+        <div class="form-group">
+            <label>ای میل:</label>
+            <input type="email" id="regEmail" placeholder="apka@email.com">
+        </div>
+        <div class="form-group">
+            <label>پاس ورڈ:</label>
+            <input type="password" id="regPassword" placeholder="پاس ورڈ بنائیں">
+        </div>
+        <div class="form-group">
+            <label>کورس کا نام:</label>
+            <input type="text" id="regCourse" placeholder="مثلاً: اردو گرائمر">
+        </div>
+        <button onclick="registerUser()">رجستر کریں</button>
+        <p id="regError" class="error-msg"></p>
+        <p style="margin-top: 15px;">پہلے سے اکاؤنٹ موجود ہے؟ <a href="#" onclick="showLogin()" style="color: #007bff;">لاگ ان کریں</a></p>
+    </div>
+
+    <!-- لاگ ان سیکشن (پہلے سے چھپا ہوگا) -->
+    <div id="loginSection" class="box hidden">
         <h3>اسٹوڈنٹ لاگ ان</h3>
         <div class="form-group">
-            <label>ای میل / یوزر نیم:</label>
+            <label>ای میل:</label>
             <input type="email" id="email" placeholder="apka@email.com">
         </div>
         <div class="form-group">
@@ -24,6 +48,7 @@
         </div>
         <button onclick="loginUser()">لاگ ان کریں</button>
         <p id="loginError" class="error-msg"></p>
+        <p style="margin-top: 15px;">اکاؤنٹ نہیں ہے؟ <a href="#" onclick="showRegister()" style="color: #007bff;">نیا اکاؤنٹ بنائیں</a></p>
     </div>
 
     <!-- ڈیش بورڈ (لاگ ان کے بعد نظر آئے گا) -->
@@ -33,7 +58,7 @@
         
         <h4>سبق منتخب کریں:</h4>
         <div class="form-group">
-            <label>کورس کا نام (مثلاً جیسا شیٹ میں ہے):</label>
+            <label>کورس کا نام:</label>
             <input type="text" id="courseNameInput" placeholder="کورس کا نام لکھیں">
         </div>
         <div class="form-group">
